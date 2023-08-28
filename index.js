@@ -1,4 +1,4 @@
-import express from "express"
+import express, { response } from "express"
 // import data from "./data/MOCK_DATA.json"
 
 
@@ -29,9 +29,17 @@ app.get('/', (request, response) =>{
     response.json(data)
 })
 
+//GET with next()
+app.get('/next', (request, response, next) =>{
+    console.log('The response will be send by the next function.');
+    next()
+}, (request, response)=>{
+    response.send("I just set up a route with a second callback.  ")
+})
+
 //GET with Routing Parameters
 app.get('/class/:id', (req, res)=>{
-    const studentId = Number(req.params.id)
+    const studentId = +req.params.id
     const student = data.filter((student) => student.id === studentId)
     res.send(student)
 
