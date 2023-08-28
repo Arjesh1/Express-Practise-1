@@ -29,6 +29,16 @@ app.get('/', (request, response) =>{
     response.json(data)
 })
 
+//GET - download method
+app.get('/download', (request, response) =>{
+    response.download("images/mountain2.jpg")
+})
+
+//GET - redirect method
+app.get('/redirect', (request, response) =>{
+    response.redirect("http://www.linkedin.com")
+})
+
 //GET with next()
 app.get('/next', (request, response, next) =>{
     console.log('The response will be send by the next function.');
@@ -60,9 +70,22 @@ app.delete('/delete', (request, response) =>{
     response.send('This is a Delete request at /delete')
 })
 
-
-
 app.listen(PORT, () =>{
     console.log(`The server is running on port ${PORT} `);
     
 })
+
+
+//Route chaining
+app.route("/class")
+.get((request, response)=>{
+    response.send("Retrieve class info")
+})
+.post((request, response)=>{
+    response.send("Retrieve class info")
+})
+.put((request, response)=>{
+    response.send("Retrieve class info")
+})
+
+
