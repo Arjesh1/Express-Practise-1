@@ -24,9 +24,24 @@ app.use(express.static("public"))
 
 app.use('/images', express.static('images'))
 
+
+// Using express.json & express.urlencoded
+
+// app.use(express.json())
+
+app.use(express.urlencoded({extended: true}))
+
+
+
 //GET
 app.get('/', (request, response) =>{
     response.json(data)
+})
+
+//POST - express.json and express.urlencoded
+app.post('/item', (req, res)=>{
+    console.log(req.body)
+    res.send(req.body)
 })
 
 //GET - download method
@@ -41,9 +56,11 @@ app.get('/redirect', (request, response) =>{
 
 //GET with next()
 app.get('/next', (request, response, next) =>{
+    //Middleware: Access the routing parameters
     console.log('The response will be send by the next function.');
     next()
 }, (request, response)=>{
+    //Everything above this line is middleware
     response.send("I just set up a route with a second callback.  ")
 })
 
@@ -79,7 +96,8 @@ app.listen(PORT, () =>{
 //Route chaining
 app.route("/class")
 .get((request, response)=>{
-    response.send("Retrieve class info")
+    // response.send("Retrieve class info")
+    throw new Error()
 })
 .post((request, response)=>{
     response.send("Retrieve class info")
