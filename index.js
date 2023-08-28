@@ -87,12 +87,6 @@ app.delete('/delete', (request, response) =>{
     response.send('This is a Delete request at /delete')
 })
 
-app.listen(PORT, () =>{
-    console.log(`The server is running on port ${PORT} `);
-    
-})
-
-
 //Route chaining
 app.route("/class")
 .get((request, response)=>{
@@ -105,5 +99,18 @@ app.route("/class")
 .put((request, response)=>{
     response.send("Retrieve class info")
 })
+
+app.use((err, req, res, next)=>{
+console.error(err.stack)
+res.status(500).send("Something went wrong!")
+})
+
+app.listen(PORT, () =>{
+    console.log(`The server is running on port ${PORT} `);
+    
+})
+
+
+
 
 
